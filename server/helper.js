@@ -17,4 +17,6 @@ const removeUser = (socket_id) => {
         return users.splice(index,1)[0]
     }
 }
-module.exports = {addUser}
+const getUser = (socket_id) => users.find(user => user.socket_id === socket_id)
+
+module.exports = {addUser,getUser, removeUser}
