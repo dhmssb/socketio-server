@@ -1,7 +1,24 @@
 const app = require('express')();
 const http = require('http').Server(app);
+const mongoose = require ('mongoose')
 const socketio =require ('socket.io')
 const io = socketio(http);
+const mongoDB = 'mongodb+srv://dhms:123qwe4r@cluster0.edcby.mongodb.net/chatdb?retryWrites=true&w=majority'
+
+const mongodbConnection = mongoose.connect(
+  mongoDB,
+  {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  },
+  (err, conn) => {
+    if (err) throw err;
+    console.log('Database connected!');
+  }
+)
+
 const {addUser, getUser, removeUser} = require ('./helper')
 
 const PORT = process.env.PORT || 5000
