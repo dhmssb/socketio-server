@@ -1,5 +1,5 @@
 const mongoose = require ('mongoose')
-const mongoDB = 'mongodb+srv://dhms:123qwe4r@cluster0.edcby.mongodb.net/chatdb?retryWrites=true&w=majority'
+const mongoDB = process.env.DATABASE
 
 const mongodbConnection = mongoose.connect(
     mongoDB,
