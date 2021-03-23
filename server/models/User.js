@@ -1,4 +1,5 @@
 const mongoose = require ('mongoose')
+const bcrypt = require ('bcrypt')
 const {isEmail} = require ('validator')
 
 const userSchema = new mongoose.Schema({
@@ -21,14 +22,9 @@ const userSchema = new mongoose.Schema({
 })
 
 //before save
-userSchema.pre('save', function(next){
-    console.log('before save', this)
-    next()
-})
-
-//after save
-userSchema.post('save', function(doc, next){
-    console.log('after save', doc)
+userSchema.pre('save', async function(next){
+    const salt = await bcrypt.genSalt()
+    this.password = await bcrypt.hash (this.password, salt)
     next()
 })
 
