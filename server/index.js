@@ -1,6 +1,9 @@
 require('dotenv').config();
-const app = require('express')()
+const express = require ('express')
+const app = express()
+
 const http = require('http').Server(app)
+const bodyParser = require ('body-parser')
 const socketio =require ('socket.io')
 const io = socketio(http)
 const Room = require ('./models/Room')
@@ -8,12 +11,13 @@ const Message = require ('./models/Message')
 
 const authRoutes = require ('./routes/authRoutes')
 const mongodbConnection = require ('./config/database')
-
-
-
 const {addUser, getUser, removeUser} = require ('./helper')
 
 const PORT = process.env.PORT || 5000
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
+app.use(express.json())
 app.use(authRoutes)
 
 io.on('connection', (socket) => {
